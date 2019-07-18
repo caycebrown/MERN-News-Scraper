@@ -38,21 +38,24 @@ router.get('/scrape', async (req, res) => {
 
 
 router.get('/saved-articles', (req, res) => {
-    db.Article.find({})
-    res.json({route: 'fetch saved articles from db'})
+    db.Article.find({}).then(data => res.json(data))
+    //res.json({route: 'fetch saved articles from db'})
 
 });
 
 router.post('/save', (req, res) => {
-    res.json({route: 'save a new article to db'})
+    db.Article.create(req.body).then(data => res.json(data))
+    //res.json({route: 'save a new article to db'})
 });
 
 router.put('/comment', (req, res) => {
     res.json({route: 'leave comment on article and save to db'})
 });
 
-router.delete('/clear', (req, res) => {
-    res.json({route: 'clear all saved articles from db'})
+router.get('/clear', (req, res) => {
+    db.Article.collection.drop();
+    res.status(200).send('success')
+    //res.json({route: 'clear all saved articles from db'})
 });
 
 module.exports = router;
