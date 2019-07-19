@@ -4,7 +4,7 @@ function ScrapeButton(props) {
     
     return (
         <div>
-            <button onClick={props.onClick}>Click Me</button>
+            <button className='btn btn-success' onClick={props.scrape}>Scrape Articles</button>
         </div>
     )
 

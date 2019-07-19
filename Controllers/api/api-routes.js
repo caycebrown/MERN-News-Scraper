@@ -19,15 +19,19 @@ router.get('/scrape', async (req, res) => {
             var i = 0;
             var results = [];
 
-            $(".post-block__title").each(function() {
+            $(".post-block").each(function() {
               results[i] = {};
               results[i].title = $(this)
-                .find("a")
+                .find(".post-block__title a")
                 .text().trim();
               results[i].link = $(this)
-                .find("a")
+                .find(".post-block__title a")
                 .attr("href");
+              results[i].text = $(this)
+                .find(".post-block__content")
+                .text().trim() + '...';
               i++;
+
             })
 
             console.log(results)
@@ -54,7 +58,8 @@ router.put('/comment', (req, res) => {
 
 router.get('/clear', (req, res) => {
     db.Article.collection.drop();
-    res.status(200).send('success')
+    res.status(200);
+    res.send({message: 'success'});
     //res.json({route: 'clear all saved articles from db'})
 });
 
