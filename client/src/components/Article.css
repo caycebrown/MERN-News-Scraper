@@ -1,0 +1,13 @@
+#article {
+    background-color: whitesmoke;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding-left: 20px;
+    padding-top: 15px;
+}
+
+button {
+    margin-bottom: 15px;
+}

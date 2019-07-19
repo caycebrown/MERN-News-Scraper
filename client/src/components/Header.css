@@ -1,0 +1,16 @@
+#buttons {
+    justify-content: space-around;
+}
+
+#header h1 {
+    text-align: center;
+    color: white;
+    padding-bottom: 40px;
+}
+
+#header {
+    background-color: rgb(20, 20, 20);
+    padding-top: 20px;
+    padding-bottom: 40px;
+
+}
