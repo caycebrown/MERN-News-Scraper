@@ -43,24 +43,46 @@ router.get('/scrape', async (req, res) => {
 
 router.get('/saved-articles', (req, res) => {
     db.Article.find({}).then(data => res.json(data))
-    //res.json({route: 'fetch saved articles from db'})
-
 });
 
 router.post('/save', (req, res) => {
     db.Article.create(req.body).then(data => res.json(data))
-    //res.json({route: 'save a new article to db'})
 });
 
-router.put('/comment', (req, res) => {
-    res.json({route: 'leave comment on article and save to db'})
+router.put('/comments:id', (req, res) => {
+    db.Comment.create(req.body)
+        .then( comment => {
+            return db.Article.findOneAndUpdate(
+              { _id: req.params.id },
+              { comment: comment._id },
+              { new: true }
+            );
+        })
+        .then(article => res.json(article))
+        .catch(e => res.json(e));
 });
+      //res.json({route: 'leave comment on article and save to db'})
+
+router.get("/comments:id", (req, res) => {
+    db.Article.findOne({ _id: req.params.id})
+        .populate("comment")
+        .then(article => res.json(article))
+        .catch(function(err){
+          res.json(err);
+        })
+      })
 
 router.get('/clear', (req, res) => {
     db.Article.collection.drop();
-    res.status(200);
-    res.send({message: 'success'});
-    //res.json({route: 'clear all saved articles from db'})
+    res.status(200).send({message: 'success'});
 });
+
+router.get('/delete-one:id', (req, res) => {
+    console.log(req.params.id)
+    db.Article.findByIdAndRemove(req.params.id)
+    .then(data => res.json(data))
+});
+
+
 
 module.exports = router;
