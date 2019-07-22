@@ -22,9 +22,6 @@ if (process.env.NODE_ENV === "production") {
   }
 
 
-app.get('/', function(req, res){
-    res.send('connected to home')
-});
 
 
 app.listen(PORT, function(err) {
