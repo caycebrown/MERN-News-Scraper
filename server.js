@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === "production") {
 
 
 app.get('/', function(req, res){
-    res.send(express.static("client/build"))
+    res.send(__dirname + './client/build/index.html')
 });
 
 
