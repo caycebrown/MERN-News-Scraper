@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === "production") {
     app.use(express.static(path.resolve(__dirname, "client/build")));
 
     app.get('*', (req, res) => {
-        res.sendFind(path.resolve(__dirname, 'client/build', 'index.html'))
+        res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'))
         .catch(e => res.send(e))
     });
   };
