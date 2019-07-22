@@ -17,11 +17,13 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/MernScraper";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 
-app.use('/', express.static("./client/build"));
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.resolve(__dirname, "client/build")));
 
-//if (process.env.NODE_ENV === "production") {
-//   app.use(express.static("./client/build"));
-//  }
+    app.get('*', (req, res) => {
+        res.sendFind(path.resolve(__dirname, 'client/build', 'index.html'))
+    });
+  };
 
 
 app.listen(PORT, function(err) {
