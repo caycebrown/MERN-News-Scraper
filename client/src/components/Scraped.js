@@ -6,7 +6,7 @@ function Scraped(props) {
     return(
         <div className="container-fluid">
 
-            {(props.state) === null ? <h1>No Articles Have Been Scraped</h1> : 
+            {(!props.state) ? <div className='row' id='error'><h2>No Articles Have Been Scraped</h2></div> : 
                 props.state.map(x => <Article link={x.link} 
                                               title={x.title} 
                                               text={x.text} 

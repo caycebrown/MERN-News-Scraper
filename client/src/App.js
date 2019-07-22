@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Loading from './components/Loading';
 import Scraped from './components/Scraped';
 import Saved from './components/Saved';
-import Comments from './components/Comments';
+import CommentPage from './components/Comment-Page';
 
 
 class App extends React.Component {
@@ -15,8 +15,8 @@ class App extends React.Component {
     scraped : null,
     archived: null,
     saved: null,
+    comments: null,
     isLoading : false
-    
     }
   }
 
@@ -32,7 +32,7 @@ class App extends React.Component {
         this.setState({archived: data})
       }
       //This .map checks for any new articles in state.scrape and then adds them to state.archive
-      data.map(({title, link, text}) => {
+      data.forEach(({title, link, text}) => {
         for(let i = 0; i < this.state.archived.length; i++){
           if(!this.state.archived[i].title === title){
             this.setState({archived: [...this.state.archived, ...[{title: title, link: link, text: text}]]})
@@ -86,17 +86,29 @@ class App extends React.Component {
     .catch(e => console.log('there was an error ' + e))
   };
 
-  newComment = (id) => {
-    fetch(`/api/comments${id}`)
+  //Adds new comment
+  newComment = (id, data) => {
+    var options = {
+      headers: { "Content-Type": "application/json" },
+      method: "PUT",
+      body: JSON.stringify(data)
+    };
+
+    fetch(`/api/comments${id}`, options)
     .then(res => res.json())
     .then(data => console.log(data))
+    .then(() => this.getComments(id))
     .catch(e => console.log('there was an error ' + e))
   };
 
+  //Gets comments from DB
   getComments = (id) => {
     fetch(`/api/comments${id}`)
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => {
+      console.log(data)
+      this.setState({comments: data})
+    })
     .catch(e => console.log('there was an error ' + e))
   };
 
@@ -110,9 +122,18 @@ class App extends React.Component {
               scrape={this.handleClick}/>
       
         <Switch>
-          <Route path='/saved' exact render={(props) => <Saved {...props} state={this.state.saved} deleteOne={this.deleteOne}/>}/>
-          <Route exact path='/' render={(props) => <Scraped {...props} state={this.state.archived} saveNew={this.saveNew}/> }/>
-          <Route exact path='/comments' render={(props) => <Comments {...props} />}/>
+          <Route path='/saved' exact render={(props) => <Saved {...props} 
+                                                               state={this.state.saved} 
+                                                               deleteOne={this.deleteOne}
+                                                               getComments={this.getComments}/>}/>
+          
+          <Route exact path='/' render={(props) => <Scraped {...props} 
+                                                            state={this.state.archived} 
+                                                            saveNew={this.saveNew}/> }/>
+          
+          <Route exact path='/comments' render={(props) => <CommentPage {...props} 
+                                                                        newComment={this.newComment}
+                                                                        state={this.state.comments} />}/>
         </Switch>
       </Router>
 

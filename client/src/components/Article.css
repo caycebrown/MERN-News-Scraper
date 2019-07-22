@@ -6,11 +6,27 @@
     margin-right: 15px;
     padding-left: 20px;
     padding-top: 15px;
+    box-shadow: 5px 5px 3px black;
 }
 
 #article button {
     width: 200px;
     margin-bottom: 15px;
     margin-right: 40px;
+    box-shadow: 3px 3px 3px black;
 }
 
+#error {
+    background-color: whitesmoke;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+    margin-right: 15px;
+    box-shadow: 5px 5px 3px black;
+}
+
+#error, h2 {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color:black
+}

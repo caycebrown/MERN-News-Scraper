@@ -1,16 +1,22 @@
 #buttons {
     justify-content: space-around;
+    background-color: rgb(255, 250, 219);
+    padding-bottom: 20px;
+    padding-top: 20px;
+    box-shadow: 0px 4px 4px black;
+}
+
+button {
+    box-shadow: 3px 3px 5px black;
 }
 
 #header h1 {
     text-align: center;
-    color: white;
-    padding-bottom: 40px;
+    color: rgb(255, 255, 255);
+    padding-bottom: 20px;
 }
 
 #header {
-    background-color: rgb(20, 20, 20);
-    padding-top: 20px;
-    padding-bottom: 40px;
+    background-color: rgb(0, 0, 0);
 
 }

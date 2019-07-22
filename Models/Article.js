@@ -1,9 +1,18 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-var Schema = mongoose.Schema;
 
 
-var ArticleSchema = new Schema({
+const CommentSchema = new Schema({
+
+  author: String,
+
+  body: String
+});
+
+
+
+const ArticleSchema = new Schema({
 
   title: {
     type: String,
@@ -20,10 +29,7 @@ var ArticleSchema = new Schema({
     required: true
   },
 
-  note: {
-    type: Schema.Types.ObjectId,
-    ref: "Comment"
-  }
+  comment: [CommentSchema]
 });
 
 

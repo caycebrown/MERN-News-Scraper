@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 require('./Article.css');
 
 function SavedArticle(props) {
@@ -9,7 +10,7 @@ function SavedArticle(props) {
                 <p>{props.text}</p>
                 <div className='btn-row'>
                     <button className='btn btn-danger' id={props.id} onClick={() => props.deleteOne(props.dbID)}>Delete</button>
-                    <button className='btn btn-primary' id={props.id} >Add Comment</button>
+                    <Link to='/comments'><button className='btn btn-primary' id={props.id} onClick={() => props.getComments(props.dbID)}>View Comments</button></Link>
                 </div>
                 
             </div>
