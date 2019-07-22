@@ -11,7 +11,15 @@ app.use(express.json());
 //Use api routes
 app.use('/api', Routes);
 
-mongoose.connect("mongodb://localhost/MernScraper", { useNewUrlParser: true });
+//Setup for connecting db via heroku or locally
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/MernScraper";
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static("client/build"));
+  }
 
 
 app.get('/', function(req, res){
