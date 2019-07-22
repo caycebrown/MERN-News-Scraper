@@ -23,6 +23,7 @@ if (process.env.NODE_ENV === "production") {
 
     app.get('*', (req, res) => {
         res.sendFind(path.resolve(__dirname, 'client/build', 'index.html'))
+        .catch(e => res.send(e))
     });
   };
 
