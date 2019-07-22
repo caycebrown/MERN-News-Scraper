@@ -22,6 +22,9 @@ if (process.env.NODE_ENV === "production") {
   }
 
 
+app.get('/', function(req, res){
+    res.send(express.static("client/build"))
+});
 
 
 app.listen(PORT, function(err) {
