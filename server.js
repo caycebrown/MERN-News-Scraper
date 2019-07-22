@@ -3,6 +3,7 @@ const app = express()
 const PORT = process.env.PORT || 3001;
 const Routes = require('./Controllers/api/api-routes');
 const mongoose = require('mongoose');
+const path = require('path');
 
 //Middleware
 app.use(express.urlencoded({ extended: true }));
