@@ -49,28 +49,27 @@ router.post('/save', (req, res) => {
     db.Article.create(req.body).then(data => res.json(data))
 });
 
-router.put('/comments:id', (req, res) => {
-    db.Comment.create(req.body)
-        .then( comment => {
-            return db.Article.findOneAndUpdate(
-              { _id: req.params.id },
-              { comment: comment._id },
-              { new: true }
-            );
-        })
-        .then(article => res.json(article))
-        .catch(e => res.json(e));
+router.put('/comments:id', async (req, res) => {
+    console.log(req.params.id)
+    console.log(req.body)
+    const results = await 
+    db.Article.findOne({ _id: req.params.id })
+    .then(article => {
+        article.comment.push(req.body)
+        article.save()
+        .then( () => db.Article.findOne({ _id: req.params.id })
+        .then(UpdatedArticle => UpdatedArticle))
+    })
+    .then(res => res.json(results))
+    .catch(e => res.json(e));
 });
       //res.json({route: 'leave comment on article and save to db'})
 
 router.get("/comments:id", (req, res) => {
     db.Article.findOne({ _id: req.params.id})
-        .populate("comment")
         .then(article => res.json(article))
-        .catch(function(err){
-          res.json(err);
-        })
-      })
+        .catch(function(err){ res.json(err)})
+});
 
 router.get('/clear', (req, res) => {
     db.Article.collection.drop();
