@@ -17,9 +17,11 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/MernScraper";
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static("./client/build"));
-  }
+app.use('/', express.static("./client/build"));
+
+//if (process.env.NODE_ENV === "production") {
+//   app.use(express.static("./client/build"));
+//  }
 
 
 app.listen(PORT, function(err) {
