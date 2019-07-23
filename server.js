@@ -3,6 +3,7 @@ const app = express()
 const PORT = process.env.PORT || 3001;
 const Routes = require('./Controllers/api/api-routes');
 const mongoose = require('mongoose');
+const path = require('path');
 
 //Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -12,19 +13,19 @@ app.use(express.json());
 app.use('/api', Routes);
 
 //Setup for connecting db via heroku or locally
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/MernScraper";
+var MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/MernScraper';
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 
-if (process.env.NODE_ENV === "production") {
-    app.use(express.static("client/build"));
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, 'build', 'index.html')));
+
+    app.get('/*', function(req, res) {
+        res.sendFile(path.join(__dirname, 'build', 'index.html'));
+      });
   }
 
-
-app.get('/', function(req, res){
-    res.send('connected to home')
-});
 
 
 app.listen(PORT, function(err) {
